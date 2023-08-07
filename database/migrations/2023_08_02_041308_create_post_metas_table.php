@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('post_metas', function (Blueprint $table) {
             $table->id();
-            $table->string('key_meta', 50)->requied();
-            $table->string('content');
+            $table->string('key_meta', 50)->nullable(false);
+            $table->string('content')->nullable(false);
             $table->timestamps();
         });
     }
