@@ -18,9 +18,9 @@ return new class extends Migration
             $table->text('content')->nullable(false);
             $table->tinyInteger('status_published')->nullable(false);
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
             $table->unsignedBigInteger('post_meta_id');
-            $table->foreign('post_meta_id')->references('id')->on('post_metas')->nullOnDelete();
+            $table->foreign('post_meta_id')->references('id')->on('post_metas')->restrictOnDelete();
             $table->timestamps();
         });
     }
