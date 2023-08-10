@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\articleController;
-use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\homeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UsersController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,23 +18,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::inertia('/login', 'login');
+Route::view('/login', 'login');
 
-Route::controller(homeController::class)->group(function () {
-    Route::get('/', "index");
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index');
 });
 
-Route::controller(articleController::class)->group(function () {
-    route::get('/article', 'index');
-    route::get('/article/{id}', 'show');
-    route::get('/dashboard/editor', 'create');
-    // route::post('/dashboard/editor', 'store');
-    route::get('/dashboard/editor/{id}', 'edit');
-    // route::put('/dashboard/editor/{id}', 'update');
-    // route::delete('/dashboard/post/{id}', 'destroy');
-});
+Route::prefix("auth")
+    ->controller(AuthController::class)
+    ->group(function () {
+        Route::post('/login', "login");
+        Route::get('/logout', "logout");
+    });
 
-Route::controller(dashboardController::class)->group(function () {
-    route::get('/dashboard', "index");
-    route::get('/dashboard/{route}', "route");
+Route::prefix("dashboard")->group(function () {
+    Route::get("/", function () {
+        return view("dashboard.dashboard");
+    });
+    Route::prefix("article")
+        ->controller(ArticleController::class)
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/editor", "create");
+            Route::post("/editor", "store");
+            Route::get("/editor/{id}", "edit");
+            Route::put("/editor/{id}", "update");
+            Route::get("/{id}", "show");
+        });
+    Route::prefix("users")
+        ->controller(UsersController::class)
+        ->group(function () {
+            Route::get("/", "index");
+            Route::get("/new", "create");
+            Route::post("/new", "store");
+            Route::get("/edit/{id}", "edit");
+            Route::put("/edit/{id}", "update");
+            Route::get("/{id}", "show");
+        });
 });

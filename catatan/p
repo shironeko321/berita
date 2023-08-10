@@ -1,0 +1,5 @@
+cmd
+npm uninstall @headlessui/react @heroicons/react @inertiajs/react @vitejs/plugin-react html-react-parser react react-dom react-quill @tailwindcss/forms @tailwindcss/typography autoprefixer postcss prettier prettier-plugin-tailwindcss tailwindcss
+
+cmd
+composer remove inertiajs/inertia-laravel 

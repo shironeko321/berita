@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class articleController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        return Inertia::render('article');
+        return view("dashboard.article.article");
     }
 
     /**
@@ -21,8 +19,7 @@ class articleController extends Controller
      */
     public function create()
     {
-        //
-        return Inertia::render('editor');
+        return view("dashboard.article.new");
     }
 
     /**
@@ -30,7 +27,7 @@ class articleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -38,8 +35,7 @@ class articleController extends Controller
      */
     public function show(string $id)
     {
-        //
-        return Inertia::render('article', []);
+        return view("dashboard.article.editor");
     }
 
     /**
@@ -47,8 +43,7 @@ class articleController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        return Inertia::render('editor', ["id" => $id]);
+        return view("dashboard.article.edit");
     }
 
     /**
@@ -56,7 +51,7 @@ class articleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->all());
     }
 
     /**
