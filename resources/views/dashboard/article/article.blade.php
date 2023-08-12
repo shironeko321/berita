@@ -6,30 +6,35 @@
     <div
       class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between position-sticky top-0 bg-white">
       <h3>Article</h3>
-      <a href="/dashboard/article/editor" class="btn btn-primary">Tambah</a>
+      <a href="{{ route('new_article') }}" class="btn btn-primary">Tambah</a>
     </div>
     <div class="container py-2 border rounded my-1 overflow-auto">
-      <table class="table table-striped-column">
-        <theader>
+      <table class="table table-striped">
+        <thead>
           <th>no</th>
+          <th>id</th>
           <th>title</th>
           <th>slug</th>
           <th>content</th>
-          <th>status publish</th>
+          <th>status published</th>
+          <th>user id</th>
+          <th>post meta id</th>
           <th>action</th>
-        </theader>
+        </thead>
         <tbody>
-          {{-- @forelse ($collection as $item) --}}
-          @for ($i = 1; $i <= 3; $i++)
+          @forelse ($data as $item)
             <tr>
-              <td>{{ $i }}</td>
-              <td>lorem</td>
-              <td>#hello world</td>
-              <td>some content</td>
-              <td>true</td>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $item->id }}</td>
+              <td>{{ $item->title }}</td>
+              <td>{{ $item->slug }}</td>
+              <td>{{ $item->content }}</td>
+              <td>{{ $item->status_published }}</td>
+              <td>{{ $item->user_id }}</td>
+              <td>{{ $item->post_meta_id }}</td>
               <td>
-                <a href="/dashboard/article/detail/{{ $i }}" class="btn btn-success">Detail</a>
-                <a href="/dashboard/article/editor/{{ $i }}" class="btn btn-primary">Ubah</a>
+                <a href="{{ route('detail_article', [id => $i]) }}" class="btn btn-success">Detail</a>
+                <a href="{{ route('edit_article', [id => $i]) }}" class="btn btn-primary">Ubah</a>
 
                 <button class="btn btn-danger" data-bs-toggle="modal"
                   data-bs-target="#delete{{ $i }}">Hapus</button>
@@ -43,10 +48,9 @@
                       <div class="modal-body">
                         anda yakin ingin hapus item {{ $i }}?
                       </div>
-                      <form class="modal-footer">
+                      <form class="modal-footer" action="{{ route('delete_article', [id => $i]) }}" method="POST">
                         @csrf
                         @method('delete')
-                        <input type="hidden" name="id" value="1">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Ya</button>
                       </form>
@@ -55,10 +59,13 @@
                 </div>
               </td>
             </tr>
-          @endfor
-          {{-- @empty
-            <p>data tidak ada</p>    
-          @endforelse --}}
+          @empty
+            <tr>
+              <td colspan="9" class="text-center">
+                Data tidak ada
+              </td>
+            </tr>
+          @endforelse
         </tbody>
       </table>
     </div>

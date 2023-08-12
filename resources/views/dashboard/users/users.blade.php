@@ -6,13 +6,14 @@
     <div
       class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between position-sticky top-0 bg-white">
       <h3>Users</h3>
-      <a href="/dashboard/users/new" class="btn btn-primary">Tambah</a>
+      <a href="{{ route('new_user') }}" class="btn btn-primary">Tambah</a>
     </div>
 
     <div class="container py-2 border rounded my-1 overflow-auto">
-      <table class="table table-striped-column">
-        <theader>
+      <table class="table table-striped">
+        <thead>
           <th>no</th>
+          <th>id</th>
           <th>nama depan</th>
           <th>nama belakang</th>
           <th>email</th>
@@ -20,46 +21,55 @@
           <th>status</th>
           <th>hak akses</th>
           <th>action</th>
-        </theader>
+        </thead>
         <tbody>
-          @for ($i = 1; $i <= 3; $i++)
+          @forelse ($data as $item)
             <tr>
-              <td>{{ $i }}</td>
-              <td>nama depan</td>
-              <td>nama belakang</td>
-              <td>email</td>
-              <td>password</td>
-              <td>status</td>
-              <td>hak akses</td>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $item->id }}</td>
+              <td>{{ $item->first_name }}</td>
+              <td>{{ $item->last_name }}</td>
+              <td>{{ $item->email }}</td>
+              <td>{{ $item->password }}</td>
+              <td>{{ $item->status }}</td>
+              <td>{{ $item->hak_akses }}</td>
               <td>
-                <a href="/dashboard/users/{{ $i }}" class="btn btn-success">Detail</a>
-                <a href="/dashboard/users/edit/{{ $i }}" class="btn btn-primary">Ubah</a>
+                <div class="d-inline-flex align-items-center gap-2">
+                  <a href="{{ route('detail_user', ['id' => $item->id]) }}" class="btn btn-success">Detail</a>
+                  <a href="{{ route('edit_user', ['id' => $item->id]) }}" class="btn btn-primary">Ubah</a>
 
-                <button class="btn btn-danger" data-bs-toggle="modal"
-                  data-bs-target="#delete{{ $i }}">Hapus</button>
-                <div class="modal fade" id="delete{{ $i }}" tabindex="-1">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5">Peringatan</h1>
-                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                  <button class="btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#delete{{ $loop->iteration }}">Hapus</button>
+                  <div class="modal fade" id="delete{{ $loop->iteration }}" tabindex="-1">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5">Peringatan</h1>
+                          <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                          anda yakin ingin hapus item {{ $item->id }}?
+                        </div>
+                        <form class="modal-footer" action="{{ route('delete_user', ['id' => $item->id]) }}"
+                          method="POST">
+                          @csrf
+                          @method('delete')
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                          <button type="submit" class="btn btn-primary">Ya</button>
+                        </form>
                       </div>
-                      <div class="modal-body">
-                        anda yakin ingin hapus item {{ $i }}?
-                      </div>
-                      <form class="modal-footer">
-                        @csrf
-                        @method('delete')
-                        <input type="hidden" name="id" value="1">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Ya</button>
-                      </form>
                     </div>
                   </div>
                 </div>
               </td>
             </tr>
-          @endfor
+          @empty
+            <tr>
+              <td colspan="9" class="text-center">
+                Data tidak ada
+              </td>
+            </tr>
+          @endforelse
         </tbody>
       </table>
     </div>

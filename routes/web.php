@@ -18,41 +18,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/login', 'login');
-
 Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name("home");
 });
 
-Route::prefix("auth")
-    ->controller(AuthController::class)
-    ->group(function () {
-        Route::post('/login', "login");
-        Route::get('/logout', "logout");
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'login')->name("login");
+    Route::prefix("auth")->group(function () {
+        Route::post('/login', "check")->name("auth_login");
+        Route::get('/logout', "logout")->name("auth_logout");
     });
+});
 
-Route::prefix("dashboard")->group(function () {
+Route::prefix("dashboard")->middleware(['auth'])->group(function () {
     Route::get("/", function () {
         return view("dashboard.dashboard");
-    });
+    })->name("dashboard_home");
     Route::prefix("article")
         ->controller(ArticleController::class)
         ->group(function () {
-            Route::get("/", "index");
-            Route::get("/editor", "create");
-            Route::post("/editor", "store");
-            Route::get("/editor/{id}", "edit");
-            Route::put("/editor/{id}", "update");
-            Route::get("/{id}", "show");
+            Route::get("/", "index")->name("dashboard_article");
+            Route::get("/new", "create")->name("new_article");
+            Route::post("/new", "store")->name("store_article");
+            Route::get("/edit/{id}", "edit")->name("edit_article");
+            Route::put("/edit/{id}", "update")->name("update_article");
+            Route::get("/{id}", "show")->name("detail_article");
+            Route::delete("/{id}", "destroy")->name("delete_article");
         });
     Route::prefix("users")
         ->controller(UsersController::class)
         ->group(function () {
-            Route::get("/", "index");
-            Route::get("/new", "create");
-            Route::post("/new", "store");
-            Route::get("/edit/{id}", "edit");
-            Route::put("/edit/{id}", "update");
-            Route::get("/{id}", "show");
+            Route::get("/", "index")->name("dashboard_users");
+            Route::get("/new", "create")->name("new_user");
+            Route::post("/new", "store")->name("store_user");
+            Route::get("/edit/{id}", "edit")->name("edit_user");
+            Route::put("/edit/{id}", "update")->name("update_user");
+            Route::get("/{id}", "show")->name("detail_user");
+            Route::delete("/{id}", "destroy")->name("delete_user");
         });
 });

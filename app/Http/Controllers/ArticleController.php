@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -9,9 +10,9 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Post $post)
     {
-        return view("dashboard.article.article");
+        return view("dashboard.article.article", ["data" => $post::all()]);
     }
 
     /**

@@ -3,7 +3,7 @@
 @section('content')
   <nav class="navbar sticky-top navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Berita</a>
+      <a class="navbar-brand" href="{{ route('home') }}">Berita</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
         <span class="navbar-toggler-icon"></span>
       </button>

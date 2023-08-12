@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Berita | @yield('title')</title>
-  <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+  @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+  @stack('style')
+  @stack('script')
 </head>
 
 <body>
   @yield('content')
-
-  <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 </body>
 
 </html>

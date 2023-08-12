@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -25,7 +26,7 @@ class UserFactory extends Factory
             'hak_akses' => Arr::random([1, 2]),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => md5('123456'),
+            'password' => Hash::make('12345678'),
             'remember_token' => Str::random(10),
         ];
     }

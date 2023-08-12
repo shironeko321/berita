@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class DashboardLayout extends Component
@@ -23,6 +24,12 @@ class DashboardLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.dashboard-layout');
+        $first_name = isset(Auth::user()->first_name) ? Auth::user()->first_name : "guest";
+        $last_name = isset(Auth::user()->last_name) ? Auth::user()->last_name : "";
+
+        return view('components.dashboard-layout', [
+            "firstname" => $first_name,
+            "lastname" => $last_name,
+        ]);
     }
 }
