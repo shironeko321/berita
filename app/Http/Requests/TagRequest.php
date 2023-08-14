@@ -24,7 +24,6 @@ class TagRequest extends FormRequest
     {
         return [
             "title" => "required",
-            "slug" => "required",
         ];
     }
 
@@ -32,14 +31,6 @@ class TagRequest extends FormRequest
     {
         return [
             'title.required' => 'Title harus diisi',
-            'slug.required' => 'Slug harus di isi',
         ];
     }
-
-    // protected function prepareForValidation(): void
-    // {
-    //     $this->merge([
-    //         'slug' => Str::slug($this->slug),
-    //     ]);
-    // }
 }
