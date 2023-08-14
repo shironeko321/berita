@@ -5,7 +5,7 @@
   <x-dashboard-layout users="true">
     <div class="container py-2 border rounded my-1">
       <h1 class="text-center">Tambah Pengguna</h1>
-      <form class="w-50 d-flex flex-column mx-auto" method="POST" action="{{ route('store_user') }}">
+      <form class="w-50 d-flex flex-column mx-auto" method="POST" action="{{ route('users.store') }}">
         @csrf
         <div class="row mb-3">
           <div class="col">

@@ -5,7 +5,7 @@
   <x-dashboard-layout users="true">
     <div class="container py-2 border rounded my-1">
       <h1 class="text-center">Ubah Pengguna</h1>
-      <form class="w-50 d-flex flex-column mx-auto" method="POST" action="{{ route('update_user', ['id' => $id]) }}">
+      <form class="w-50 d-flex flex-column mx-auto" method="POST" action="{{ route('users.update', ['user' => $id]) }}">
         @csrf
         @method('put')
         <div class="row mb-3">

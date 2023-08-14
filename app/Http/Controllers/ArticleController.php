@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -12,7 +14,7 @@ class ArticleController extends Controller
      */
     public function index(Post $post)
     {
-        return view("dashboard.article.article", ["data" => $post::all()]);
+        return view("dashboard.article.index", ["data" => $post::all()]);
     }
 
     /**
@@ -20,7 +22,10 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view("dashboard.article.new");
+        return view("dashboard.article.new", [
+            "category" => Category::all(),
+            "tag" => Tag::all(),
+        ]);
     }
 
     /**
@@ -44,7 +49,11 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        return view("dashboard.article.edit");
+        return view("dashboard.article.edit", [
+            "id" => $id,
+            "category" => Category::all(),
+            "tag" => Tag::all(),
+        ]);
     }
 
     /**

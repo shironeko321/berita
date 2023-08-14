@@ -1,5 +1,5 @@
 <div class="vh-100 d-flex flex-column overflow-hidden">
-  <header class="d-inline-flex align-items-center justify-content-between py-2 px-3 bg-primary" data-bs-theme="dark">
+  <header class="d-inline-flex align-items-center justify-content-between px-3 bg-primary" data-bs-theme="dark">
     <div class="navbar d-inline-flex align-items-center gap-2">
       <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu">
         <span class="navbar-toggler-icon"></span>
@@ -16,11 +16,19 @@
       <li class="nav-item px-2">
         <a style="padding-right: 5rem" @class(['nav-link', 'active' => $dashboard]) href="{{ route('dashboard_home') }}">Dashboard</a>
       </li>
+      <div class="border-top border-bottom my-2 py-2">
+        <li class="nav-item px-2">
+          <a style="padding-right: 5rem" @class(['nav-link', 'active' => $article]) href="{{ route('article.index') }}">Article</a>
+        </li>
+        <li class="nav-item px-2">
+          <a style="padding-right: 5rem" @class(['nav-link', 'active' => $category]) href="{{ route('category.index') }}">Category</a>
+        </li>
+        <li class="nav-item px-2">
+          <a style="padding-right: 5rem" @class(['nav-link', 'active' => $tags]) href="{{ route('tags.index') }}">Tags</a>
+        </li>
+      </div>
       <li class="nav-item px-2">
-        <a style="padding-right: 5rem" @class(['nav-link', 'active' => $article]) href="{{ route('dashboard_article') }}">Article</a>
-      </li>
-      <li class="nav-item px-2">
-        <a style="padding-right: 5rem" @class(['nav-link', 'active' => $users]) href="{{ route('dashboard_users') }}">Users</a>
+        <a style="padding-right: 5rem" @class(['nav-link', 'active' => $users]) href="{{ route('users.index') }}">Users</a>
       </li>
     </ul>
 
