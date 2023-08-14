@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -26,16 +28,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Category $category)
+    public function store(CategoryRequest $request, Category $category)
     {
-        $validation = $request->validate([
-            "title" => "required",
-            "slug" => "required"
-        ]);
+
+        $slug = Str::slug($request->input("title"), "-");
 
         $category->create([
             "title" => $request->input("title"),
-            "slug" => $request->input("slug")
+            "slug" => $slug
         ]);
 
         return redirect()->route("category.index");

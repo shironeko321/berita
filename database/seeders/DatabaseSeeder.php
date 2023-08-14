@@ -25,9 +25,7 @@ class DatabaseSeeder extends Seeder
             'status' => Arr::random([1, 2]),
             'hak_akses' => Arr::random([1, 2]),
             'email' => "mail@mail.com",
-            'email_verified_at' => now(),
             'password' => Hash::make('12345678'),
-            'remember_token' => Str::random(10),
         ]);
     }
 }
