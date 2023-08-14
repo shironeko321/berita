@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -11,7 +14,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        return view("dashboard.tag.tag", [
+            "data" => Tag::all()
+        ]);
     }
 
     /**
@@ -19,15 +24,22 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.tag.new");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        //
+        $slug = Str::slug($request->input("title"), '-');
+
+        Tag::create([
+            "title" => $request->input("title"),
+            "slug" => $slug,
+        ]);
+
+        return redirect()->route("dashboard_tag");
     }
 
     /**
