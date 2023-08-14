@@ -61,16 +61,10 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        $validation = $request->validate([
-            "title" => "required",
-            "slug" => "required"
-        ]);
-
         $category = Category::find($id);
         $category->title = $request->input("title");
-        $category->slug = $request->input("slug");
 
         $category->save();
 
