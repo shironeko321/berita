@@ -23,7 +23,6 @@ class CategoryRequest extends FormRequest
     {
         return [
             "title" => "required",
-            "slug" => "required"
         ];
     }
 
@@ -31,7 +30,6 @@ class CategoryRequest extends FormRequest
     {
         return [
             'title.required' => 'Title harus diisi',
-            'slug.required' => 'Slug harus di isi',
         ];
     }
 }
