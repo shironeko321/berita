@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -10,9 +12,11 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Tag $tag)
+    public function index()
     {
-        //
+        return view("dashboard.tag.index", [
+            "data" => Tag::all()
+        ]);
     }
 
     /**
@@ -26,9 +30,16 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        //
+        $slug = Str::slug($request->input("title"), "-");
+
+        Tag::create([
+            "title" => $request->input("title"),
+            "slug" => $slug,
+        ]);
+
+        return redirect()->route("tags.index");
     }
 
     /**
