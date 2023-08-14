@@ -8,7 +8,7 @@
         @csrf
         <div class="mh-100 w-75 d-flex flex-column gap-2 position-relative">
           <div class="rounded border py-2 px-3 bg-white">
-            <h3>Editor</h3>
+            <h3>Tambah Artikel</h3>
           </div>
           <textarea id="mytextarea" name="content"></textarea>
           <div class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">

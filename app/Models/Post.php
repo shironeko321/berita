@@ -19,6 +19,7 @@ class Post extends Model
         'title',
         'slug',
         'content',
+        'content_meta',
         'status_published',
         'user_id',
         'post_meta'
@@ -34,11 +35,6 @@ class Post extends Model
     public function Categorys(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'post_categorys', 'post_id', 'category_id');
-    }
-
-    public function PostMeta(): HasOne
-    {
-        return $this->hasOne(PostMeta::class, 'post_meta_id', 'id');
     }
 
     public function User(): HasMany
