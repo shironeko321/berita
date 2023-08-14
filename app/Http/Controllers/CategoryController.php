@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -9,9 +10,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Category $category)
     {
-        //
+        return view("dashboard.category.index", ["data" => $category::all()]);
     }
 
     /**
@@ -19,15 +20,25 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.category.new");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
+        $validation = $request->validate([
+            "title" => "required",
+            "slug" => "required"
+        ]);
+
+        $category->create([
+            "title" => $request->input("title"),
+            "slug" => $request->input("slug")
+        ]);
+
+        return redirect()->route("category.index");
     }
 
     /**
@@ -35,7 +46,10 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view("dashboard.category.detail", [
+            "id" => $id,
+            "data" => Category::find($id)
+        ]);
     }
 
     /**
@@ -43,7 +57,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view("dashboard.category.edit", [
+            "id" => $id,
+            "data" => Category::find($id)
+        ]);
     }
 
     /**
@@ -51,7 +68,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validation = $request->validate([
+            "title" => "required",
+            "slug" => "required"
+        ]);
+
+        $category = Category::find($id);
+        $category->title = $request->input("title");
+        $category->slug = $request->input("slug");
+
+        $category->save();
+
+        return redirect()->route("category.index");
     }
 
     /**
@@ -59,6 +87,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::destroy($id);
+        return redirect()->back();
     }
 }

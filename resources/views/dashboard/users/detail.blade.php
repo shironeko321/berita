@@ -4,7 +4,7 @@
 @section('content')
   <x-dashboard-layout users="true">
     <div class="container py-2 border rounded my-1">
-      <h1 class="text-center">Ubah Pengguna</h1>
+      <h1 class="text-center">Detail Pengguna</h1>
       <div class="w-50 d-flex flex-column mx-auto">
         <div class="row mb-3">
           <div class="col">
@@ -33,7 +33,7 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" id="password" disabled>
         </div>
-        <a class="btn btn-primary" href="{{ route('edit_user', ['id' => $id]) }}">Edit</a>
+        <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $id]) }}">Edit</a>
       </div>
     </div>
   </x-dashboard-layout>

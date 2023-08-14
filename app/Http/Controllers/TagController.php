@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TagRequest;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,11 +10,9 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Tag $tag)
     {
-        return view("dashboard.tag.tag", [
-            "data" => Tag::all()
-        ]);
+        //
     }
 
     /**
@@ -30,16 +26,9 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TagRequest $request)
+    public function store(Request $request)
     {
-        $slug = Str::slug($request->input("title"), '-');
-
-        Tag::create([
-            "title" => $request->input("title"),
-            "slug" => $slug,
-        ]);
-
-        return redirect()->route("dashboard_tag");
+        //
     }
 
     /**
@@ -47,7 +36,10 @@ class TagController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view("dashboard.tag.detail", [
+            "id" => $id,
+            "data" => Tag::find($id)
+        ]);
     }
 
     /**
@@ -55,7 +47,10 @@ class TagController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view("dashboard.tag.edit", [
+            "id" => $id,
+            "data" => Tag::find($id)
+        ]);
     }
 
     /**
@@ -63,7 +58,18 @@ class TagController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validation = $request->validate([
+            "title" => "required",
+            "slug" => "required"
+        ]);
+
+        $tag = Tag::find($id);
+        $tag->title = $request->input("title");
+        $tag->slug = $request->input("slug");
+
+        $tag->save();
+
+        return redirect()->route("tags.index");
     }
 
     /**
@@ -71,6 +77,7 @@ class TagController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Tag::destroy($id);
+        return redirect()->back();
     }
 }

@@ -6,7 +6,7 @@
     <div
       class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between position-sticky top-0 bg-white">
       <h3>Users</h3>
-      <a href="{{ route('new_user') }}" class="btn btn-primary">Tambah</a>
+      <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah</a>
     </div>
 
     <div class="container py-2 border rounded my-1 overflow-auto">
@@ -35,8 +35,8 @@
               <td>{{ $item->hak_akses }}</td>
               <td>
                 <div class="d-inline-flex align-items-center gap-2">
-                  <a href="{{ route('detail_user', ['id' => $item->id]) }}" class="btn btn-success">Detail</a>
-                  <a href="{{ route('edit_user', ['id' => $item->id]) }}" class="btn btn-primary">Ubah</a>
+                  <a href="{{ route('users.show', ['user' => $item->id]) }}" class="btn btn-success">Detail</a>
+                  <a href="{{ route('users.edit', ['user' => $item->id]) }}" class="btn btn-primary">Ubah</a>
 
                   <button class="btn btn-danger" data-bs-toggle="modal"
                     data-bs-target="#delete{{ $loop->iteration }}">Hapus</button>
@@ -50,7 +50,7 @@
                         <div class="modal-body">
                           anda yakin ingin hapus item {{ $item->id }}?
                         </div>
-                        <form class="modal-footer" action="{{ route('delete_user', ['id' => $item->id]) }}"
+                        <form class="modal-footer" action="{{ route('users.destroy', ['user' => $item->id]) }}"
                           method="POST">
                           @csrf
                           @method('delete')

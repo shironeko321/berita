@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view("dashboard.users.users", [
+        return view("dashboard.users.index", [
             "data" => User::all()
         ]);
     }
@@ -41,7 +41,7 @@ class UsersController extends Controller
             "password" => Hash::make($request->input("password")),
         ]);
 
-        return redirect()->route("dashboard_users");
+        return redirect()->route("users.index");
     }
 
     /**
@@ -87,15 +87,15 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect()->route("dashboard_users");
+        return redirect()->route("users.index");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id, User $user)
+    public function destroy(string $id)
     {
-        $user->destroy($id);
+        User::destroy($id);
         return redirect()->back();
     }
 }
