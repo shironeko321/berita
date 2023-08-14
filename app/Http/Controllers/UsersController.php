@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,17 +30,8 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(UsersRequest $request, User $user)
     {
-        $validated = $request->validate([
-            "firstname" => "required",
-            "lastname" => "required",
-            "email" => "required|email",
-            "status" => "required",
-            "access" => "required",
-            "password" => "required|min:8",
-        ]);
-
         $user->create([
             "first_name" => $request->input("firstname"),
             "last_name" => $request->input("lastname"),
