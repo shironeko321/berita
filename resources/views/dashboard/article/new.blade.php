@@ -10,6 +10,10 @@
           <div class="rounded border py-2 px-3 bg-white">
             <h3>Tambah Artikel</h3>
           </div>
+          <div class="rounded border py-2 px-3 bg-white">
+            <label for="exampleFormControlTextarea1" class="form-label">Content Meta</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content_meta"></textarea>
+          </div>
           <textarea id="mytextarea" name="content"></textarea>
           <div class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">
             <div class="d-inline-flex align-items-center gap-2">
@@ -35,6 +39,10 @@
                   <label for="title" class="form-label">Title</label>
                   <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
                 </div>
+                {{-- <div class="w-100">
+                  <label for="slug" class="form-label">Slug</label>
+                  <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
+                </div> --}}
                 <div class="w-100">
                   <label class="form-label">Status</label>
                   <div class="form-check form-switch">
