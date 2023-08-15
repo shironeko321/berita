@@ -24,15 +24,24 @@
         </div>
         <div class="mb-3">
           <label for="status" class="form-label">Status</label>
-          <input type="number" class="form-control" name="status" value="{{ $data->status }}" id="status">
+          <input type="number" @class(['form-control', 'is-invalid' => $errors->has('status')]) name="status" id="status" value="{{ $data->status }}">
+          @error('status')
+            <span class="invalid-feedback">{{ $message }}</span>
+          @enderror
         </div>
         <div class="mb-3">
           <label for="access" class="form-label">Access</label>
-          <input type="number" class="form-control" name="access" value="{{ $data->hak_akses }}" id="access">
+          <input type="number" @class(['form-control', 'is-invalid' => $errors->has('access')]) name="access" id="access" value="{{ $data->hak_akses }}">
+          @error('access')
+            <span class="invalid-feedback">{{ $message }}</span>
+          @enderror
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" name="password" id="password">
+          <input type="password" @class(['form-control', 'is-invalid' => $errors->has('password')]) name="password" id="password">
+          @error('password')
+            <span class="invalid-feedback">{{ $message }}</span>
+          @enderror
         </div>
         <button type="submit" class="btn btn-primary">Ubah</button>
       </form>
