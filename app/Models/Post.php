@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
+    use HasFactory;
+    use Sluggable;
+
+    protected $table = "posts";
+
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -25,19 +30,26 @@ class Post extends Model
         'post_meta'
     ];
 
-    use HasFactory;
 
-    public function Tags(): BelongsToMany
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
     }
 
-    public function Categorys(): BelongsToMany
+    public function categorys(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'post_categorys', 'post_id', 'category_id');
     }
 
-    public function User(): HasMany
+    public function user(): HasMany
     {
         return $this->hasMany(User::class, 'user_id', 'id');
     }
