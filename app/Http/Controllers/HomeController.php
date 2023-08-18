@@ -10,4 +10,16 @@ class HomeController extends Controller
     {
         return view("home.home");
     }
+    public function article()
+    {
+        return view("home.article");
+    }
+    public function category()
+    {
+        return view("home.category");
+    }
+    public function tags()
+    {
+        return view("home.tags");
+    }
 }

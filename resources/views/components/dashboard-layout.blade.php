@@ -1,14 +1,20 @@
 <div class="vh-100 d-flex flex-column overflow-hidden">
   <header class="d-inline-flex align-items-center justify-content-between px-3 bg-primary" data-bs-theme="dark">
     <div class="navbar d-inline-flex align-items-center gap-2">
-      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu">
+      <a href="{{ route('home') }}" class="h4 text-light link-underline link-underline-opacity-0 mr-3">Berita</a>
+      <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a href="{{ route('home') }}" class="h4 text-light link-underline link-underline-opacity-0">Berita</a>
     </div>
-    <div class="d-inline-flex align-items-center gap-2">
-      <span class="text-light">{{ $firstname }} {{ $lastname }}</span>
-      <a href="{{ route('auth_logout') }}" class="text-light link-underline link-underline-opacity-0">Logout</a>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+        {{ $firstname }} {{ $lastname }}
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="{{ route('auth_logout') }}" class="dropdown-item">Logout</a>
+        </li>
+      </ul>
     </div>
   </header>
   <main class="h-100 d-flex gap-2 mh-100 overflow-hidden">
