@@ -17,8 +17,8 @@
           <textarea id="mytextarea" name="content"></textarea>
           <div class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">
             <div class="d-inline-flex align-items-center gap-2">
-              <a href="{{ route('article.index') }}" name="submitbtn" class="btn btn-danger">Batal</a>
-              <button type="submit" name="submitbtn" class="btn btn-primary">Simpan</button>
+              <a href="{{ route('article.index') }}" name="submitbtn" class="btn btn-danger">Cancel</a>
+              <button type="submit" name="submitbtn" class="btn btn-success">Save</button>
             </div>
           </div>
         </div>
@@ -39,15 +39,11 @@
                   <label for="title" class="form-label">Title</label>
                   <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
                 </div>
-                {{-- <div class="w-100">
-                  <label for="slug" class="form-label">Slug</label>
-                  <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
-                </div> --}}
                 <div class="w-100">
                   <label class="form-label">Status</label>
                   <div class="form-check form-switch">
                     <input type="checkbox" class="form-check-input publish" role="switch" name="status_published"
-                      id="status_published" value="{{ old('status_published') }}">
+                      id="status_published" value="{{ old('status_published') }}" name="status_published">
                     <label for="status_published" class="form-check-label not_publish">Not Published</label>
                     <label for="status_published" class="form-check-label published">Published</label>
                   </div>
@@ -61,7 +57,7 @@
                     value="{{ $item->id }}">
                   <label class="btn btn-outline-primary" for="category-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
-                  <p>category tidak ada</p>
+                  <p>Category does not exist</p>
                 @endforelse
               </div>
             </div>
@@ -72,7 +68,7 @@
                     value="{{ $item->id }}">
                   <label class="btn btn-outline-primary" for="tag-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
-                  <p>category tidak ada</p>
+                  <p>Tag does not exist</p>
                 @endforelse
               </div>
             </div>

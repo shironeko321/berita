@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('content_meta')->nullable(false);
             $table->tinyInteger('status_published')->nullable(false);
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

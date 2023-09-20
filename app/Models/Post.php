@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     use Sluggable;
 
     protected $table = "posts";
@@ -51,6 +52,6 @@ class Post extends Model
 
     public function user(): HasMany
     {
-        return $this->hasMany(User::class, 'user_id', 'id');
+        return $this->hasMany(User::class, 'id', 'user_id');
     }
 }

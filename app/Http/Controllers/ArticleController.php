@@ -2,38 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArticleRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Post $post)
     {
-        return view("dashboard.article.index", ["data" => $post::all()]);
+        return view("dashboard.article.index", ["data" => $post::with('user')->get()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view("dashboard.article.new", [
-            "category" => Category::all(),
-            "tag" => Tag::all(),
+            "category" => Category::select('id', 'title')->get(),
+            "tag" => Tag::select('id', 'title')->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        dd($request->all());
+        $user = Auth::user();
+
+        $article = Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'content_meta' => $request->content_meta,
+            'status_published' => 1,
+            'user_id' => $user->id
+        ]);
+
+        $article->tags()->attach($request->tags);
+        $article->categorys()->attach($request->category);
+
+        return redirect()->route('article.index');
     }
 
     /**
@@ -49,10 +55,14 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
+        $article = Post::with(['tags', 'categorys'])->where('id', $id)->first();
+
         return view("dashboard.article.edit", [
-            "id" => $id,
-            "category" => Category::all(),
-            "tag" => Tag::all(),
+            "article" => $article,
+            'a_tag' => $article->tags->pluck('id')->toArray(),
+            'a_category' => $article->categorys->pluck('id')->toArray(),
+            "category" => Category::select('id', 'title')->get(),
+            "tag" => Tag::select('id', 'title')->get(),
         ]);
     }
 

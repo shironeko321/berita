@@ -10,11 +10,11 @@
           <div class="rounded border py-2 px-3 bg-white">
             <h3>Editor</h3>
           </div>
-          <textarea id="mytextarea" name="content"></textarea>
+          <textarea id="mytextarea" name="content">{{ $article->content }}</textarea>
           <div class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">
             <div class="d-inline-flex align-items-center gap-2">
-              <a href="{{ route('article.index') }}" name="submitbtn" class="btn btn-danger">Batal</a>
-              <button type="submit" name="submitbtn" class="btn btn-primary">Simpan</button>
+              <a href="{{ route('article.index') }}" name="submitbtn" class="btn btn-danger">Cancel</a>
+              <button type="submit" name="submitbtn" class="btn btn-success">Save</button>
             </div>
           </div>
         </div>
@@ -33,11 +33,7 @@
               <div class="d-flex flex-column gap-2">
                 <div class="w-100">
                   <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
-                </div>
-                <div class="w-100">
-                  <label for="slug" class="form-label">Slug</label>
-                  <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
+                  <input type="text" class="form-control" name="title" id="title" value="{{ $article->title }}">
                 </div>
                 <div class="w-100">
                   <label class="form-label">Status</label>
@@ -52,12 +48,12 @@
             </div>
             <div class="tab-pane fade" id="nav-category" role="tabpanel" tabindex="0">
               <div class="d-flex flex-wrap gap-2">
-                @forelse ($category as $item)
+                @forelse ($category as $item)                   
                   <input class="btn-check" type="checkbox" name="category[]" id="category-{{ $item->id }}"
-                    value="{{ $item->id }}">
+                      value="{{ $item->id }}" {{ (in_array($item->id, $a_category) ? 'checked' : '') }}>
                   <label class="btn btn-outline-primary" for="category-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
-                  <p>category tidak ada</p>
+                  <p>Category does not exist</p>
                 @endforelse
               </div>
             </div>
@@ -65,60 +61,14 @@
               <div class="d-flex flex-wrap gap-2">
                 @forelse ($tag as $item)
                   <input class="btn-check" type="checkbox" name="tags[]" id="tag-{{ $item->id }}"
-                    value="{{ $item->id }}">
+                    value="{{ $item->id }}" {{ (in_array($item->id, $a_tag) ? 'checked' : '') }}>
                   <label class="btn btn-outline-primary" for="tag-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
-                  <p>category tidak ada</p>
+                  <p>Tag does not exist</p>
                 @endforelse
               </div>
             </div>
           </div>
-
-          {{-- <div class="rounded border py-2 px-3 bg-white overflow-auto">
-            <div class="d-flex flex-column gap-2">
-              <div class="w-100">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
-              </div>
-              <div class="w-100">
-                <label for="slug" class="form-label">Slug</label>
-                <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}">
-              </div>
-              <div class="w-100">
-                <label class="form-label">Status</label>
-                <div class="form-check form-switch">
-                  <input type="checkbox" class="form-check-input publish" role="switch" name="status_published"
-                    id="status_published" value="{{ old('status_published') }}">
-                  <label for="status_published" class="form-check-label not_publish">Not Published</label>
-                  <label for="status_published" class="form-check-label published">Published</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="rounded border py-2 px-3 bg-white overflow-auto">
-            <h3 class="border-bottom pb-2">Category</h3>
-            <div class="d-flex flex-wrap gap-2">
-              @forelse ($category as $item)
-                <input class="btn-check" type="checkbox" name="category[]" id="category-{{ $item->id }}"
-                  value="{{ $item->id }}">
-                <label class="btn btn-outline-primary" for="category-{{ $item->id }}">{{ $item->title }}</label>
-              @empty
-                <p>category tidak ada</p>
-              @endforelse
-            </div>
-          </div>
-          <div class="rounded border py-2 px-3 bg-white overflow-auto ">
-            <h3 class="border-bottom pb-2">Tags</h3>
-            <div class="d-flex flex-wrap gap-2">
-              @forelse ($tag as $item)
-                <input class="btn-check" type="checkbox" name="tags[]" id="tag-{{ $item->id }}"
-                  value="{{ $item->id }}">
-                <label class="btn btn-outline-primary" for="tag-{{ $item->id }}">{{ $item->title }}</label>
-              @empty
-                <p>category tidak ada</p>
-              @endforelse
-            </div>
-          </div> --}}
         </div>
       </form>
 
