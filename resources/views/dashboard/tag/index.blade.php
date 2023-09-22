@@ -8,13 +8,14 @@
         class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between top-0 bg-white">
         <h3>Tags</h3>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah">Tambah</button>
-        <div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah">New</button>
+        <div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false"
+          tabindex="-1">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5">Tambah Tags</h1>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <h1 class="modal-title fs-5">Add Tags</h1>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
               </div>
               <div class="modal-body">
                 @include('dashboard.tag.new')
@@ -35,30 +36,29 @@
       <div class="container py-2 border rounded my-1 overflow-auto">
         <table class="table table-striped">
           <thead>
-            <th>no</th>
-            <th>id</th>
-            <th>title</th>
-            <th>slug</th>
-            <th>action</th>
+            <th>#</th>
+            <th>Title</th>
+            <th>Slug</th>
+            <th>Action</th>
           </thead>
           <tbody>
             @forelse ($data as $item)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->id }}</td>
                 <td>{{ $item->title }}</td>
                 <td>{{ $item->slug }}</td>
                 <td>
                   <div class="d-inline-flex align-items-center gap-2">
                     <button class="btn btn-primary" data-bs-toggle="modal"
-                      data-bs-target="#ubah-{{ $item->id }}">Ubah</button>
+                      data-bs-target="#ubah-{{ $item->id }}">Change</button>
                     <div class="modal fade" id="ubah-{{ $item->id }}" data-bs-backdrop="static"
                       data-bs-keyboard="false" tabindex="-1">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5">Tambah Tags</h1>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <h1 class="modal-title fs-5">Change Tags</h1>
+                            <button type="button" class="btn btn-danger"
+                              data-bs-dismiss="modal">Cancle</button>
                           </div>
                           <div class="modal-body">
                             @include('dashboard.tag.edit')
@@ -68,23 +68,24 @@
                     </div>
 
                     <button class="btn btn-danger" data-bs-toggle="modal"
-                      data-bs-target="#delete{{ $loop->iteration }}">Hapus</button>
+                      data-bs-target="#delete{{ $loop->iteration }}">Delete</button>
                     <div class="modal fade" id="delete{{ $loop->iteration }}" tabindex="-1">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5">Peringatan</h1>
+                            <h1 class="modal-title fs-5">Alert</h1>
                             <button class="btn-close" data-bs-dismiss="modal"></button>
                           </div>
                           <div class="modal-body">
-                            anda yakin ingin hapus item {{ $item->id }}?
+                            are you sure you want to delete the item?
                           </div>
-                          <form class="modal-footer" action="{{ route('tags.destroy', ['tag' => $item->id]) }}"
-                            method="POST">
+                          <form class="modal-footer"
+                            action="{{ route('tags.destroy', ['tag' => $item->id]) }}" method="POST">
                             @csrf
                             @method('delete')
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Ya</button>
+                            <button type="button" class="btn btn-danger"
+                              data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Yes</button>
                           </form>
                         </div>
                       </div>

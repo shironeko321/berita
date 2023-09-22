@@ -2,8 +2,9 @@
   @csrf
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
+    <input type="text" class="form-control" name="title" id="title"
+      value="{{ old('title') }}">
   </div>
-  <button type="submit" class="btn btn-primary">Tambah</button>
+  <button type="submit" class="btn btn-primary">Add</button>
 </form>
 </div>

@@ -23,8 +23,11 @@ use Illuminate\Support\Facades\Route;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name("home");
     Route::get('/article', 'article')->name("article");
+    Route::get('/article/{slug}', 'detailArticle')->name("article.detail");
     Route::get('/category', 'category')->name("category");
+    Route::get('/category/{slug}', 'detailCategory')->name("category.detail");
     Route::get('/tags', 'tags')->name("tags");
+    Route::get('/tags/{slug}', 'detailTags')->name("tags.detail");
 });
 
 Route::controller(AuthController::class)->group(function () {
@@ -42,8 +45,8 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function () {
 
     Route::resources([
         "article" => ArticleController::class,
-        "users" => UsersController::class,
         "category" => CategoryController::class,
+        "users" => UsersController::class,
         "tags" => TagController::class,
     ]);
 });

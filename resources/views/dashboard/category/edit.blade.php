@@ -1,10 +1,12 @@
-<form class="d-flex flex-column mx-auto" method="POST" action="{{ route('category.update', ['category' => $item->id]) }}">
+<form class="d-flex flex-column mx-auto" method="POST"
+  action="{{ route('category.update', ['category' => $item->id]) }}">
   @csrf
   @method('put')
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" name="title" id="title" value="{{ $item->title }}">
+    <input type="text" class="form-control" name="title" id="title"
+      value="{{ $item->title }}">
   </div>
-  <button type="submit" class="btn btn-primary">Ubah</button>
+  <button type="submit" class="btn btn-primary">Change</button>
 </form>
 </div>

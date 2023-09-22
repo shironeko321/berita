@@ -2,9 +2,14 @@
 
 @section('title', 'Tags')
 @section('content')
-  <x-home-layout tags>
-    <h1>Hello, World!</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium inventore, rem at sunt architecto et aliquid
-      nesciunt, hic ullam animi molestias omnis debitis? Quod eum modi, voluptate iste tenetur dolorem?</p>
-  </x-home-layout>
+    <x-home-layout tags>
+        <div class="row gap-2">
+            @forelse ($tags as $item)
+                <a href="{{ route('tags.detail', ['slug' => $item->slug]) }}"
+                    class="btn btn-primary col-4 col-md-2">{{ $item->title }}</a>
+            @empty
+                <p class="col">data tidak ada</p>
+            @endforelse
+        </div>
+    </x-home-layout>
 @endsection

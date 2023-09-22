@@ -47,7 +47,8 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
-        return view("dashboard.article.editor");
+        $slug = Post::find($id)->with('user')->first()->slug;
+        return redirect()->route("article.detail", ["slug" => $slug]);
     }
 
     /**
