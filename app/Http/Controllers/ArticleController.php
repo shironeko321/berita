@@ -71,7 +71,21 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request->all());
+        $article = Post::find($id);
+        $user = Auth::user();
+
+        $article->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'content_meta' => $request->content_meta,
+            'status_published' => 1,
+            'user_id' => $user->id
+        ]);
+        
+        $article->tags()->sync($request->tags);
+        $article->categorys()->sync($request->category);
+
+        return redirect()->route('article.index');
     }
 
     /**
@@ -79,6 +93,13 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $article = Post::find($id);
+
+        Post::destroy($id);
+
+        $article->tags()->detach();
+        $article->categorys()->detach();
+
+        return redirect()->back();
     }
 }

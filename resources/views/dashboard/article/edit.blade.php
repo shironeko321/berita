@@ -4,8 +4,9 @@
 @section('content')
   <x-dashboard-layout article="true">
     <main class="h-100 container">
-      <form method="post" action="{{ route('article.store') }}" class="d-flex gap-5">
+      <form method="post" action="{{ route('article.update', ['article' => $article->id]) }}" class="d-flex gap-5">
         @csrf
+        @method('PUT')
         <div class="mh-100 w-75 d-flex flex-column gap-2 position-relative">
           <div class="rounded border py-2 px-3 bg-white">
             <h3>Editor</h3>
@@ -43,6 +44,10 @@
                     <label for="status_published" class="form-check-label not_publish">Not Published</label>
                     <label for="status_published" class="form-check-label published">Published</label>
                   </div>
+                </div>
+                <div class="w-100">
+                  <label for="content_meta" class="form-label">Content Meta</label>
+                  <textarea class="form-control" id="content_meta" rows="3" name="content_meta">{{ $article->content_meta }}</textarea>
                 </div>
               </div>
             </div>
