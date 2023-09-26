@@ -18,6 +18,7 @@ class DashboardLayout extends Component
         public bool $users = false,
         public bool $category = false,
         public bool $tags = false,
+        public bool $media = false,
     ) {
     }
 
