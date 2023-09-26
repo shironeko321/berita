@@ -52,9 +52,12 @@
                 </div>
                 <div class="w-100">
                   <label for="content_meta" class="form-label">Content Meta</label>
-                  <textarea class="form-control" id="content_meta" rows="3" name="content_meta">
+                  <<<<<<< HEAD <textarea class="form-control" id="content_meta" rows="3" name="content_meta">
                     {{ $article->content_meta }}
                   </textarea>
+                  =======
+                  <textarea class="form-control" id="content_meta" rows="3" name="content_meta">{{ $article->content_meta }}</textarea>
+                  >>>>>>> 085acb6f951f01ebaea89890cdd3a7bb9614719e
                 </div>
               </div>
             </div>
