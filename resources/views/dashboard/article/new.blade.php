@@ -109,9 +109,18 @@
           selector: '#mytextarea',
           statusbar: false,
           toolbar_sticky: true,
-          plugins: 'link lists save preview',
-          toolbar: 'undo redo save preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link',
-          height: 450
+          plugins: 'link lists save preview image code',
+          toolbar: 'undo redo save preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
+          height: 450,
+          automatic_uploads: false,
+          file_picker_types: 'image',
+          /* and here's our custom image picker*/
+          file_picker_callback: (cb, value, meta) => {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+          },
         });
       </script>
     </main>
