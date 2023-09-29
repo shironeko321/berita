@@ -1,18 +1,38 @@
 {
+  "node_modules/.pnpm/photoswipe@5.4.1/node_modules/photoswipe/dist/photoswipe.esm.js": {
+    "file": "assets/photoswipe.esm-5762295a.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/.pnpm/photoswipe@5.4.1/node_modules/photoswipe/dist/photoswipe.esm.js"
+  },
   "resources/js/app.css": {
-    "file": "assets/app-671f65eb.css",
+    "file": "assets/app-4c3504b5.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-671f65eb.css"
+      "assets/app-4c3504b5.css"
     ],
-    "file": "assets/app-4c5fd58a.js",
+    "file": "assets/app-1a76ce19.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
+  "resources/js/media.css": {
+    "file": "assets/media-5a2b7f8d.css",
+    "src": "resources/js/media.css"
+  },
+  "resources/js/media.js": {
+    "css": [
+      "assets/media-5a2b7f8d.css"
+    ],
+    "dynamicImports": [
+      "node_modules/.pnpm/photoswipe@5.4.1/node_modules/photoswipe/dist/photoswipe.esm.js"
+    ],
+    "file": "assets/media-bd32b9cc.js",
+    "isEntry": true,
+    "src": "resources/js/media.js"
+  },
   "resources/sass/app.scss": {
-    "file": "assets/app-671f65eb.css",
+    "file": "assets/app-4c3504b5.css",
     "src": "resources/js/app.css"
   }
 }

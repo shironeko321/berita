@@ -11,19 +11,21 @@
             <h3>Tambah Artikel</h3>
           </div>
           <textarea id="mytextarea" name="content"></textarea>
-          <div class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">
+          <div
+            class="w-100 d-inline-flex align-items-center justify-content-end gap-2 bg-white border rounded py-2 px-3">
             <div class="d-inline-flex align-items-center gap-2">
-              <a href="{{ route('article.index') }}" name="submitbtn" class="btn btn-danger">Cancel</a>
+              <a href="{{ route('article.index') }}" name="submitbtn"
+                class="btn btn-danger">Cancel</a>
               <button type="submit" name="submitbtn" class="btn btn-success">Save</button>
             </div>
           </div>
         </div>
         <div class="d-flex w-25 flex-column gap-2 rounded border p-2 bg-white overflow-auto">
           <div class="nav nav-pills border-bottom pb-2" role="tablist">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-article" type="button"
-              role="tab">Article</button>
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-category" type="button"
-              role="tab">Category</button>
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#nav-article"
+              type="button" role="tab">Article</button>
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-category"
+              type="button" role="tab">Category</button>
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-tags" type="button"
               role="tab">Tags</button>
           </div>
@@ -33,14 +35,17 @@
               <div class="d-flex flex-column gap-2">
                 <div class="w-100">
                   <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}">
+                  <input type="text" class="form-control" name="title" id="title"
+                    value="{{ old('title') }}">
                 </div>
                 <div class="w-100">
                   <label class="form-label">Status</label>
                   <div class="form-check form-switch">
-                    <input type="checkbox" class="form-check-input publish" role="switch" name="status_published"
-                      id="status_published" value="{{ old('status_published') }}" name="status_published">
-                    <label for="status_published" class="form-check-label not_publish">Not Published</label>
+                    <input type="checkbox" class="form-check-input publish" role="switch"
+                      name="status_published" id="status_published"
+                      value="{{ old('status_published') }}" name="status_published">
+                    <label for="status_published" class="form-check-label not_publish">Not
+                      Published</label>
                     <label for="status_published" class="form-check-label published">Published</label>
                   </div>
                 </div>
@@ -55,9 +60,10 @@
             <div class="tab-pane fade" id="nav-category" role="tabpanel" tabindex="0">
               <div class="d-flex flex-wrap gap-2">
                 @forelse ($category as $item)
-                  <input class="btn-check" type="checkbox" name="category[]" id="category-{{ $item->id }}"
-                    value="{{ $item->id }}">
-                  <label class="btn btn-outline-primary" for="category-{{ $item->id }}">{{ $item->title }}</label>
+                  <input class="btn-check" type="checkbox" name="category[]"
+                    id="category-{{ $item->id }}" value="{{ $item->id }}">
+                  <label class="btn btn-outline-primary"
+                    for="category-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
                   <p>Category does not exist</p>
                 @endforelse
@@ -68,7 +74,8 @@
                 @forelse ($tag as $item)
                   <input class="btn-check" type="checkbox" name="tags[]" id="tag-{{ $item->id }}"
                     value="{{ $item->id }}">
-                  <label class="btn btn-outline-primary" for="tag-{{ $item->id }}">{{ $item->title }}</label>
+                  <label class="btn btn-outline-primary"
+                    for="tag-{{ $item->id }}">{{ $item->title }}</label>
                 @empty
                   <p>Tag does not exist</p>
                 @endforelse
@@ -109,11 +116,19 @@
           selector: '#mytextarea',
           statusbar: false,
           toolbar_sticky: true,
-          plugins: 'link lists save preview image code',
-          toolbar: 'undo redo save preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
+          plugins: 'link lists preview image code',
+          toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
           height: 450,
           automatic_uploads: false,
           file_picker_types: 'image',
+          image_list: [
+            @foreach ($images as $item)
+              {
+                title: "{{ $loop->index }}",
+                value: "{{ asset($item) }}"
+              },
+            @endforeach
+          ],
           /* and here's our custom image picker*/
           file_picker_callback: (cb, value, meta) => {
             const input = document.createElement('input');

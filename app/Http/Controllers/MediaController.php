@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
@@ -11,7 +12,9 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        return view("dashboard.media.index", [
+            "collection" => Storage::allFiles("images")
+        ]);
     }
 
     /**
@@ -27,7 +30,13 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "image" => "file|image",
+        ]);
+
+        $request->file('image')->store('images');
+
+        return redirect()->route("media.index");
     }
 
     /**

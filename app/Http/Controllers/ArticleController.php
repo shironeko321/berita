@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -18,9 +19,11 @@ class ArticleController extends Controller
 
     public function create()
     {
+        // dd(Storage::allFiles("images"));
         return view("dashboard.article.new", [
             "category" => Category::select('id', 'title')->get(),
             "tag" => Tag::select('id', 'title')->get(),
+            "images" => Storage::allFiles("images")
         ]);
     }
 
@@ -64,6 +67,7 @@ class ArticleController extends Controller
             'a_category' => $article->categorys->pluck('id')->toArray(),
             "category" => Category::select('id', 'title')->get(),
             "tag" => Tag::select('id', 'title')->get(),
+            "images" => Storage::allFiles("images")
         ]);
     }
 
@@ -82,7 +86,7 @@ class ArticleController extends Controller
             'status_published' => 1,
             'user_id' => $user->id
         ]);
-        
+
         $article->tags()->sync($request->tags);
         $article->categorys()->sync($request->category);
 

@@ -52,12 +52,10 @@
                 </div>
                 <div class="w-100">
                   <label for="content_meta" class="form-label">Content Meta</label>
-                  <<<<<<< HEAD <textarea class="form-control" id="content_meta" rows="3" name="content_meta">
+                  <textarea class="form-control" id="content_meta" rows="3" name="content_meta">
                     {{ $article->content_meta }}
                   </textarea>
-                  =======
                   <textarea class="form-control" id="content_meta" rows="3" name="content_meta">{{ $article->content_meta }}</textarea>
-                  >>>>>>> 085acb6f951f01ebaea89890cdd3a7bb9614719e
                 </div>
               </div>
             </div>
@@ -122,9 +120,26 @@
           selector: '#mytextarea',
           statusbar: false,
           toolbar_sticky: true,
-          plugins: 'link lists save preview',
-          toolbar: 'undo redo save preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link',
-          height: 450
+          plugins: 'link lists preview image code',
+          toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
+          height: 450,
+          automatic_uploads: false,
+          file_picker_types: 'image',
+          image_list: [
+            @foreach ($images as $item)
+              {
+                title: "{{ $loop->index }}",
+                value: "{{ asset($item) }}"
+              },
+            @endforeach
+          ],
+          /* and here's our custom image picker*/
+          file_picker_callback: (cb, value, meta) => {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+          },
         });
       </script>
     </main>
