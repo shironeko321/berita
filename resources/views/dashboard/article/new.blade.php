@@ -119,16 +119,9 @@
           plugins: 'link lists preview image code',
           toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
           height: 450,
-          automatic_uploads: false,
+          automatic_uploads: true,
           file_picker_types: 'image',
-          image_list: [
-            @foreach ($images as $item)
-              {
-                title: "{{ $loop->index }}",
-                value: "{{ asset($item) }}"
-              },
-            @endforeach
-          ],
+
           /* and here's our custom image picker*/
           file_picker_callback: (cb, value, meta) => {
             const input = document.createElement('input');
