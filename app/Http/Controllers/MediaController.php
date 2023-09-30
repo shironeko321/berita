@@ -41,7 +41,26 @@ class MediaController extends Controller
         // $request->file('image')->store('images');
 
         // return redirect()->route("media.index");
+<<<<<<< HEAD
         
+=======
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $imagePath = 'images/' . $imageName;
+            $destinationPath = public_path($imagePath);
+            Image::make($request->file('image'))->save($destinationPath);
+
+            Media::create([
+                'media_name' => $imageName
+            ]);
+        }
+        return redirect()->route("media.index");
+>>>>>>> 12cc508902a931dda119074ab39d84d7970cb9a5
     }
 
     /**
@@ -82,9 +101,9 @@ class MediaController extends Controller
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
         ]);
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
             $imagePath = 'images/' . $imageName;
             $destinationPath = public_path($imagePath);
             Image::make($request->file('image'))->save($destinationPath);

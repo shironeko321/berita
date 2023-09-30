@@ -111,6 +111,7 @@
       @pushOnce('script')
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+<<<<<<< HEAD
         @endPushOnce
         <script>
           const example_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
@@ -167,6 +168,29 @@
             images_upload_handler: example_image_upload_handler
           });
           </script>
+=======
+      @endPushOnce
+      <script>
+        tinymce.init({
+          selector: '#mytextarea',
+          statusbar: false,
+          toolbar_sticky: true,
+          plugins: 'link lists preview image code',
+          toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
+          height: 450,
+          automatic_uploads: true,
+          file_picker_types: 'image',
+
+          /* and here's our custom image picker*/
+          file_picker_callback: (cb, value, meta) => {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+          },
+        });
+      </script>
+>>>>>>> 12cc508902a931dda119074ab39d84d7970cb9a5
     </main>
   </x-dashboard-layout>
 @endsection
