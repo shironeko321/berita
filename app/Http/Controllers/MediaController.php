@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class MediaController extends Controller
 {
@@ -30,12 +32,28 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "image" => "file|image",
+        // $request->validate([
+        //     "image" => "file|image",
+        // ]);
+
+        // $request->file('image')->store('images');
+
+        // return redirect()->route("media.index");
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
         ]);
 
-        $request->file('image')->store('images');
+        if($request->hasFile('image')) {
 
+            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
+            $imagePath = 'images/' . $imageName;
+            $destinationPath = public_path($imagePath);
+            Image::make($request->file('image'))->save($destinationPath);
+
+            Media::create([
+                'media_name' => $imageName
+            ]);
+        }
         return redirect()->route("media.index");
     }
 
@@ -69,5 +87,26 @@ class MediaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function uploadImageArticle(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
+        ]);
+
+        if($request->hasFile('image')) {
+
+            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
+            $imagePath = 'images/' . $imageName;
+            $destinationPath = public_path($imagePath);
+            Image::make($request->file('image'))->save($destinationPath);
+
+            $tes = Media::create([
+                'image_name' => $imageName
+            ]);
+
+            dd($tes);
+        }
     }
 }
