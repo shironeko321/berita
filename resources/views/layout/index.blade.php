@@ -8,11 +8,11 @@
   <title>Berita | @yield('title')</title>
   @vite(['resources/sass/app.scss', 'resources/js/app.js'])
   @stack('style')
-  @stack('script')
 </head>
 
 <body>
   @yield('content')
+  @stack('script')
 </body>
 
 </html>

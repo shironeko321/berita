@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Image;
 
 class MediaController extends Controller
@@ -14,8 +15,9 @@ class MediaController extends Controller
      */
     public function index()
     {
+        $image = Media::select('id', 'media_name')->get();
         return view("dashboard.media.index", [
-            "collection" => Storage::allFiles("images")
+            "collection" => $image
         ]);
     }
 
@@ -39,22 +41,7 @@ class MediaController extends Controller
         // $request->file('image')->store('images');
 
         // return redirect()->route("media.index");
-        $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
-        ]);
-
-        if($request->hasFile('image')) {
-
-            $imageName = time().'-'.$request->file('image')->getClientOriginalName();
-            $imagePath = 'images/' . $imageName;
-            $destinationPath = public_path($imagePath);
-            Image::make($request->file('image'))->save($destinationPath);
-
-            Media::create([
-                'media_name' => $imageName
-            ]);
-        }
-        return redirect()->route("media.index");
+        
     }
 
     /**
@@ -102,11 +89,10 @@ class MediaController extends Controller
             $destinationPath = public_path($imagePath);
             Image::make($request->file('image'))->save($destinationPath);
 
-            $tes = Media::create([
-                'image_name' => $imageName
+            Media::create([
+                'media_name' => $imageName
             ]);
-
-            dd($tes);
         }
+        return response()->json(['location'=>"/images/$imageName"]);
     }
 }

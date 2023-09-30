@@ -51,4 +51,6 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function () {
         "tags" => TagController::class,
         "media" => MediaController::class,
     ]);
+
+    Route::post('/upload-image', [MediaController::class, 'uploadImageArticle'])->name("upload.image.media");
 });

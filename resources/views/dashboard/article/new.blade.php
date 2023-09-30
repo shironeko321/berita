@@ -109,35 +109,64 @@
         </style>
       @endPushOnce
       @pushOnce('script')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
-      @endPushOnce
-      <script>
-        tinymce.init({
-          selector: '#mytextarea',
-          statusbar: false,
-          toolbar_sticky: true,
-          plugins: 'link lists preview image code',
-          toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
-          height: 450,
-          automatic_uploads: false,
-          file_picker_types: 'image',
-          image_list: [
-            @foreach ($images as $item)
-              {
-                title: "{{ $loop->index }}",
-                value: "{{ asset($item) }}"
-              },
-            @endforeach
-          ],
-          /* and here's our custom image picker*/
-          file_picker_callback: (cb, value, meta) => {
-            const input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
-            input.click();
-          },
-        });
-      </script>
+        @endPushOnce
+        <script>
+          const example_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    xhr.open('POST', '{{ route('upload.image.media') }}');
+    xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  
+    xhr.upload.onprogress = (e) => {
+      progress(e.loaded / e.total * 100);
+    };
+  
+    xhr.onload = () => {
+      if (xhr.status === 403) {
+        reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+        return;
+      }
+  
+      if (xhr.status < 200 || xhr.status >= 300) {
+        reject('HTTP Error: ' + xhr.status);
+        return;
+      }
+  
+      const json = JSON.parse(xhr.responseText);
+  
+      if (!json || typeof json.location != 'string') {
+        reject('Invalid JSON: ' + xhr.responseText);
+        return;
+      }
+  
+      resolve(json.location);
+    };
+  
+    xhr.onerror = () => {
+      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+    };
+  
+    const formData = new FormData();
+    formData.append('image', blobInfo.blob(), blobInfo.filename());
+  
+    xhr.send(formData);
+  });
+          tinymce.init({
+            selector: 'textarea',
+            toolbar_sticky: true,
+            statusbar: false,
+            plugins: 'link lists preview image code',
+            toolbar: 'undo redo preview | styles fontsize | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image | code',
+            height: 500,
+            image_title: true,
+            automatic_uploads: true,
+            file_picker_types: 'image',
+            images_upload_handler: example_image_upload_handler
+          });
+          </script>
     </main>
   </x-dashboard-layout>
 @endsection

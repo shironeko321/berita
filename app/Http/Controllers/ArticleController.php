@@ -23,7 +23,6 @@ class ArticleController extends Controller
         return view("dashboard.article.new", [
             "category" => Category::select('id', 'title')->get(),
             "tag" => Tag::select('id', 'title')->get(),
-            "images" => Storage::allFiles("images")
         ]);
     }
 

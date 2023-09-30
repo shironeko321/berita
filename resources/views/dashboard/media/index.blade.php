@@ -24,12 +24,17 @@
         </div>
       </div>
       <div id="my-gallery">
-        <div class="pswp-gallery pswp-gallery--single-column" id="gallery--getting-started">
+        <div class="pswp-gallery pswp-gallery--single-column row gap-3" id="gallery--getting-started">
           @foreach ($collection as $item)
-            <a href="{{ asset($item) }}" data-pswp-width="750" data-pswp-height="500"
+            <a href="{{ URL::asset("/images/$item->media_name") }}" class="col-2" data-pswp-width="750" data-pswp-height="500"
               target="_blank">
-              <img src="{{ asset($item) }}" width="300" height="250" alt="gak ada" />
+              <img src="{{ URL::asset("/images/$item->media_name") }}" class="w-100" style="height: 250" />
             </a>
+            <form action="#" method="post">
+              @csrf
+              @method('PUT')
+              <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
           @endforeach
         </div>
       </div>
