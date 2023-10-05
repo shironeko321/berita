@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title')->nullable(false);
             $table->string('slug')->nullable(false);
-            $table->text('content')->nullable(false);
+            $table->longText('content')->nullable(false);
             $table->string('content_meta')->nullable(false);
             $table->tinyInteger('status_published')->nullable(false);
             $table->unsignedBigInteger('user_id');

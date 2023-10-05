@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medias', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('media_name')->nullable(true);
-            // $table->string('thumbnail_name')->nullable(true);
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->string('thumbnail')->after('status_published');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medias');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('thumbnail');
+        });
     }
 };

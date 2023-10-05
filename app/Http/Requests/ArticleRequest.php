@@ -22,25 +22,24 @@ class ArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
+            'title' => 'required|min:1|max:100',
             'content' => 'required',
-            'content_meta' => 'required',
+            'content_meta' => 'required|min:1|max:120',
             // 'status_published' => 'required',
             // 'user_id' => 'required',
-            'category' => [
-                'required',
-                'array'
-            ],
-            'tags' => [
-                'required',
-                'array'
-            ],
-            'category.*' => [
-                'required'
-            ],
-            'tags.*' => [
-                'required'
-            ]
+            'category' => 'required',
+            'tags' => 'required'
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'title' => 'Content Title',
+            'content' => 'Content',
+            'content_meta' => 'Content Meta',
+            'category' => 'Category',
+            'tags' => 'Tag'
         ];
     }
 }

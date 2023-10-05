@@ -27,10 +27,10 @@ class TagRequest extends FormRequest
         ];
     }
 
-    public function messages(): array
+    public function attributes(): array
     {
         return [
-            'title.required' => 'Title harus diisi',
+            'title' => 'Tag Title',
         ];
     }
 }
