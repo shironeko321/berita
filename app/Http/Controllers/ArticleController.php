@@ -19,7 +19,6 @@ class ArticleController extends Controller
 
     public function create()
     {
-        // dd(Storage::allFiles("images"));
         return view("dashboard.article.new", [
             "category" => Category::select('id', 'title')->get(),
             "tag" => Tag::select('id', 'title')->get(),
@@ -73,7 +72,7 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ArticleRequest $request, string $id)
     {
         $article = Post::find($id);
         $user = Auth::user();
