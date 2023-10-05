@@ -2,7 +2,7 @@
 
 @section('title', 'Home')
 @section('content')
-  <x-home-layout>
+  <x-home-layout2>
     <div class="row gap-3 justify-content-center">
       @forelse ($article as $item)
         <div class="card col-12 col-md-5">
@@ -19,5 +19,5 @@
         <p>Data tidak ada</p>
       @endforelse
     </div>
-  </x-home-layout>
+  </x-home-layout2>
 @endsection

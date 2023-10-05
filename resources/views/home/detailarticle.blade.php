@@ -2,7 +2,7 @@
 
 @section('title', $article->title)
 @section('content')
-    <x-home-layout article>
+    <x-home-layout2 article>
         <div class="card border-0">
             <div class="card-body">
                 <h3 class="card-title">{{ $article->title }}</h3>
@@ -21,5 +21,5 @@
         <div class="container">
             {!! $article->content !!}
         </div>
-    </x-home-layout>
+    </x-home-layout2>
 @endsection

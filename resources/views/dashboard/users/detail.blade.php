@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('content')
-  <x-dashboard-layout users="true">
+  <x-dashboard-layout2 users="true">
     <div class="container py-2 border rounded my-1">
       <h1 class="text-center">Detail User</h1>
       <div class="d-flex flex-column mx-auto">
@@ -36,5 +36,5 @@
         <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $id]) }}">Edit</a>
       </div>
     </div>
-  </x-dashboard-layout>
+  </x-dashboard-layout2>
 @endsection

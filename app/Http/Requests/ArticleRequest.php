@@ -25,7 +25,22 @@ class ArticleRequest extends FormRequest
             'title' => 'required',
             'content' => 'required',
             'content_meta' => 'required',
-            'status_published' => 'required',
+            // 'status_published' => 'required',
+            // 'user_id' => 'required',
+            'category' => [
+                'required',
+                'array'
+            ],
+            'tags' => [
+                'required',
+                'array'
+            ],
+            'category.*' => [
+                'required'
+            ],
+            'tags.*' => [
+                'required'
+            ]
         ];
     }
 }

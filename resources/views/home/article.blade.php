@@ -2,7 +2,7 @@
 
 @section('title', 'Article')
 @section('content')
-    <x-home-layout article>
+    <x-home-layout2 article>
         @forelse ($article as $item)
             <div class="card">
                 <div class="card-body">
@@ -20,5 +20,5 @@
                 </div>
             </div>
         @endforelse
-    </x-home-layout>
+    </x-home-layout2>
 @endsection

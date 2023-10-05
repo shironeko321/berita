@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('content')
-  <x-dashboard-layout users="true">
+  <x-dashboard-layout2 users="true">
     <div class="container py-2 border rounded my-1">
       <h1 class="text-center">Add User</h1>
       <form class="d-flex flex-column mx-auto" method="POST" action="{{ route('users.store') }}">
@@ -59,5 +59,5 @@
         <button type="submit" class="btn btn-primary">Add</button>
       </form>
     </div>
-  </x-dashboard-layout>
+  </x-dashboard-layout2>
 @endsection

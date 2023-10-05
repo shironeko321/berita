@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('content')
-  <x-dashboard-layout users="true">
+  <x-dashboard-layout2 users="true">
     <div
       class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between position-sticky top-0 bg-white">
       <h3>Users</h3>
@@ -73,5 +73,5 @@
         </tbody>
       </table>
     </div>
-  </x-dashboard-layout>
+  </x-dashboard-layout2>
 @endsection

@@ -2,7 +2,7 @@
 
 @section('title', 'Dashboard')
 @section('content')
-  <x-dashboard-layout media="true">
+  <x-dashboard-layout2 media="true">
     <div class="container">
       <div
         class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between top-0 bg-white">
@@ -48,6 +48,6 @@
         </div>
       </div>
     </div>
-  </x-dashboard-layout>
+  </x-dashboard-layout2>
   @vite('resources/js/media.js')
 @endsection

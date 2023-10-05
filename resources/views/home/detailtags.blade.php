@@ -2,7 +2,7 @@
 
 @section('title', 'Category')
 @section('content')
-  <x-home-layout tags>
+  <x-home-layout2 tags>
     <h2>Tags {{ $article->title }}</h2>
     <h4 class="text-secondary">result: {{ count($article->posts) }}</h4>
     <div class="row">
@@ -19,5 +19,5 @@
         <p class="col">data tidak ada</p>
       @endforelse
     </div>
-  </x-home-layout>
+  </x-home-layout2>
 @endsection

@@ -41,9 +41,6 @@ class MediaController extends Controller
         // $request->file('image')->store('images');
 
         // return redirect()->route("media.index");
-<<<<<<< HEAD
-        
-=======
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,jpg,png|max:2048'
         ]);
@@ -60,7 +57,6 @@ class MediaController extends Controller
             ]);
         }
         return redirect()->route("media.index");
->>>>>>> 12cc508902a931dda119074ab39d84d7970cb9a5
     }
 
     /**
@@ -112,6 +108,8 @@ class MediaController extends Controller
                 'media_name' => $imageName
             ]);
         }
-        return response()->json(['location'=>"/images/$imageName"]);
+        $url = $request->schemeAndHttpHost();
+        return response()->json(['location'=> $url . "/images/" . $imageName]);
+        // return;
     }
 }

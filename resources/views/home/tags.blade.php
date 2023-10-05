@@ -2,7 +2,7 @@
 
 @section('title', 'Tags')
 @section('content')
-    <x-home-layout tags>
+    <x-home-layout2 tags>
         <div class="row gap-2">
             @forelse ($tags as $item)
                 <a href="{{ route('tags.detail', ['slug' => $item->slug]) }}"
@@ -11,5 +11,5 @@
                 <p class="col">data tidak ada</p>
             @endforelse
         </div>
-    </x-home-layout>
+    </x-home-layout2>
 @endsection
