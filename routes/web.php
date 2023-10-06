@@ -54,3 +54,5 @@ Route::prefix("dashboard")->middleware(['auth'])->group(function () {
 
     Route::post('/upload-image', [MediaController::class, 'uploadImageArticle'])->name("upload.image.media");
 });
+
+Route::put('/update-view-content/{id}', [ArticleController::class, 'updateView'])->name('update.view.content');

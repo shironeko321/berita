@@ -27,8 +27,9 @@ class Post extends Model
         'content',
         'content_meta',
         'status_published',
+        'thumbnail',
+        'view_content',
         'user_id',
-        'post_meta'
     ];
 
 

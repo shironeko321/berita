@@ -16,6 +16,5 @@ class Media extends Model
 
     protected $fillable = [
         'media_name',
-        'thumbnail_name'
     ];
 }

@@ -6,7 +6,6 @@ use App\Http\Requests\ArticleRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,6 +33,7 @@ class ArticleController extends Controller
             'content' => $request->content,
             'content_meta' => $request->content_meta,
             'status_published' => 1,
+            'thumbnail' => 'null',
             'user_id' => $user->id
         ]);
 
@@ -104,5 +104,22 @@ class ArticleController extends Controller
         $article->categorys()->detach();
 
         return redirect()->back();
+    }
+
+    public function updateView(string $id)
+    {
+        $article = Post::find($id);
+        
+        if (is_null($article->view_content)) {
+            $countView = 1;
+        } else {
+            $countView = $article->view_content + 1;
+        }
+        
+        $article->update([
+            'view_content' => $countView
+        ]);
+
+        return response()->json();
     }
 }

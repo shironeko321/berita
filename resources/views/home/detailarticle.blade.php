@@ -21,5 +21,20 @@
         <div class="container">
             {!! $article->content !!}
         </div>
+
+        @pushOnce('script')
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+                <script>
+                    setTimeout(() => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.withCredentials = false;
+                        xhr.open('PUT', '{{ route('update.view.content', ['id' => $article->id]) }}');
+                        xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content'));
+
+                        xhr.send();
+                    }, 30000);
+                </script>
+            @endPushOnce
     </x-home-layout2>
 @endsection
