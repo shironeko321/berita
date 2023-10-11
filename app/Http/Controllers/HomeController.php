@@ -23,8 +23,17 @@ class HomeController extends Controller
     }
     public function detailArticle(string $slug)
     {
+        $post = Post::where("slug", $slug)->with(['user', 'categorys', 'tags'])->first();
+        $categoryArray = $post->categorys->pluck('slug')->toArray();
+        $category = Category::select('slug')->get();
+        
+
+        // dd($categoryArray);
+
         return view("home.detailarticle", [
-            "article" => Post::where("slug", $slug)->with('user')->first()
+            "article" => $post,
+            'categoryArray' => $categoryArray,
+            'category' => $category
         ]);
     }
     public function category()

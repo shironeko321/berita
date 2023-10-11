@@ -22,7 +22,11 @@
             {!! $article->content !!}
         </div>
         <div>
-            @comments(['model' => $article])
+            @foreach ($categoryArray as $categoryArrays)
+                @if ($categoryArrays == "opini")
+                    @comments(['model' => $article])
+                @endif
+            @endforeach
         </div>
 
         @pushOnce('script')
