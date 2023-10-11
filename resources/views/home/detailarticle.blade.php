@@ -21,6 +21,9 @@
         <div class="container">
             {!! $article->content !!}
         </div>
+        <div>
+            @comments(['model' => $article])
+        </div>
 
         @pushOnce('script')
                 <meta name="csrf-token" content="{{ csrf_token() }}">

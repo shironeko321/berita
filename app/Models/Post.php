@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Anil\Comments\Commentable;
 
 class Post extends Model
 {
     use HasFactory, HasUuids;
-    use Sluggable;
+    use Sluggable, Commentable;
 
     protected $table = "posts";
 
