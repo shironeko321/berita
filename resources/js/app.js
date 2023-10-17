@@ -1,3 +1,4 @@
-import './bootstrap';
+// import './bootstrap';
+import 'flowbite';
 
-import "../sass/app.scss"
+// import "../sass/app.scss"

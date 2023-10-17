@@ -23,14 +23,20 @@ class HomeController extends Controller
     }
     public function detailArticle(string $slug)
     {
+        $post = Post::where("slug", $slug)->with(['user', 'categorys', 'tags'])->first();
+        $categoryArray = $post->categorys->pluck('slug')->toArray();
+
         return view("home.detailarticle", [
-            "article" => Post::where("slug", $slug)->with('user')->first()
+            "article" => $post,
+            'categoryArray' => $categoryArray,
+            "category" => Category::withCount("posts")->get(),
+            "tags" => Tag::withCount("posts")->get()
         ]);
     }
     public function category()
     {
         return view("home.category", [
-            "category" => Category::all()
+            "category" => Category::withCount("posts")->get()
         ]);
     }
     public function detailCategory(string $slug)
@@ -42,7 +48,7 @@ class HomeController extends Controller
     public function tags()
     {
         return view("home.tags", [
-            "tags" => Tag::all()
+            "tags" => Tag::withCount("posts")->get()
         ]);
     }
     public function detailTags(string $slug)

@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get("/test", function () {
+    return view("home.test");
+});
+
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name("home");
     Route::get('/article', 'article')->name("article");
