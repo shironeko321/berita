@@ -61,32 +61,27 @@
             @endforelse
           </div>
         </div>
+        <div>
+          @foreach ($categoryArray as $categoryArrays)
+            @if ($categoryArrays == 'opini')
+              @comments(['model' => $article])
+            @endif
+          @endforeach
+        </div>
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script>
+          setTimeout(() => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('PUT', '{{ route('update.view.content', ['id' => $article->id]) }}');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]')
+              .getAttribute(
+                'content'));
+
+            xhr.send();
+          }, 30000);
+        </script>
       </div>
-
-      <hr class="my-10">
-
-      <div class="border p-3 rounded-lg">
-        <h2>Comment</h2>
-        @foreach ($categoryArray as $categoryArrays)
-          @if ($categoryArrays == 'opini')
-            @comments(['model' => $article])
-          @endif
-        @endforeach
-      </div>
-
-      <meta name="csrf-token" content="{{ csrf_token() }}">
-      <script>
-        setTimeout(() => {
-          const xhr = new XMLHttpRequest();
-          xhr.withCredentials = false;
-          xhr.open('PUT', '{{ route('update.view.content', ['id' => $article->id]) }}');
-          xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]')
-            .getAttribute(
-              'content'));
-
-          xhr.send();
-        }, 30000);
-      </script>
-    </div>
   </x-home-layout2>
 @endsection
