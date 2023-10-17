@@ -29,6 +29,8 @@ class HomeController extends Controller
         return view("home.detailarticle", [
             "article" => $post,
             'categoryArray' => $categoryArray,
+            "category" => Category::withCount("posts")->get(),
+            "tags" => Tag::withCount("posts")->get()
         ]);
     }
     public function category()
