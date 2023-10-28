@@ -3,10 +3,8 @@
   @csrf
   @method('put')
   <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" name="title" id="title"
-      value="{{ $item->title }}">
+    <label for="title" class="form-label">Nama Tag</label>
+    <input type="text" class="form-control" name="title" value="{{ $item->title }}" placeholder="Nama Tag">
   </div>
-  <button type="submit" class="btn btn-primary">Change</button>
+  <button type="submit" class="btn btn-success">Ubah</button>
 </form>
-</div>
