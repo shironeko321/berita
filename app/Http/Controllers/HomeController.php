@@ -12,6 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         return view("home.home", [
+            "popular" => Post::orderBy("view_content", "asc")->take(5)->get(),
             "article" => Post::where("status_published", 1)->with('user')->get()
         ]);
     }
@@ -29,6 +30,8 @@ class HomeController extends Controller
         return view("home.detailarticle", [
             "article" => $post,
             'categoryArray' => $categoryArray,
+            'categoryThisArticle' => $post->categorys,
+            'tagThisArticle' => $post->tags,
             "category" => Category::withCount("posts")->get(),
             "tags" => Tag::withCount("posts")->get()
         ]);

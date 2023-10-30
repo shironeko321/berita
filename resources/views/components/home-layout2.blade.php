@@ -1,4 +1,4 @@
-<nav class="bg-white border-b-2 border-gray-200 dark:bg-gray-900">
+<nav class="bg-white border-b border-gray-200 dark:bg-gray-900 md:border-0">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a class="flex items-center" href="{{ route('home') }}">
       <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"> Berita
@@ -42,6 +42,11 @@
   </div>
 </nav>
 
+@if (isset($home))
+  <header>
+    {{ $home }}
+  </header>
+@endif
 
 @if (isset($header))
   <header>
@@ -53,6 +58,11 @@
   </header>
 @endif
 
-<main class="container p-3 mx-auto mt-3 dark:bg-gray-800 dark:text-white">
+<main class="container px-2 py-3 mx-auto my-5 dark:bg-gray-800 dark:text-white">
   {{ $slot }}
 </main>
+
+<footer
+  class="mt-5 px-10 container flex justify-center bg-white border-gray-200 dark:bg-gray-900 dark:text-white">
+  &copy;2023
+</footer>

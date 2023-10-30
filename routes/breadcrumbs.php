@@ -19,6 +19,12 @@ Breadcrumbs::for('article', function (BreadcrumbTrail $trail) {
     $trail->push('Article', route('article'));
 });
 
+// Home > article > [article]
+Breadcrumbs::for('articleDetail', function (BreadcrumbTrail $trail, $article) {
+    $trail->parent('article');
+    $trail->push($article->title, route('article.detail', ["slug" => $article->slug]));
+});
+
 // Home > Category
 Breadcrumbs::for('category', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
