@@ -1,110 +1,132 @@
-@extends('layout.index')
-
-@section('title', 'Dashboard')
+@extends('layout.dashboard.main')
+@section('title', 'Category')
+@section('name', 'Category')
 @section('content')
-  <x-dashboard-layout2 category="true">
-    <div class="d-flex flex-column">
-      <div
-        class="container py-2 border rounded my-1 d-inline-flex align-items-center justify-content-between top-0 bg-white">
-        <h3>Category</h3>
-
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah">New</button>
-        <div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false"
-          tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5">Add Category</h1>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-              </div>
-              <div class="modal-body">
-                @include('dashboard.category.new')
-              </div>
+    <div class="row">
+        <div class="col-12">
+            {{-- <a href="#" class="btn btn-primary mb-3">Tambah</a> --}}
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-default">
+                Tambah
+            </button>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Category</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($category as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal"
+                                            data-target="#ubah-{{ $item->id }}"><i
+                                                class="fa-solid fa-pen-to-square"></i> Ubah</button>
+                                        <div class="modal fade" id="ubah-{{ $item->id }}" data-backdrop="static"
+                                            data-keyboard="false" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title fs-5">Ubah Category
+                                                            <b>{{ $item->title }}</b>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @include('dashboard.category.edit')
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                            data-target="#delete{{ $item->id }}"><i class="fa-solid fa-trash"></i>
+                                            Delete</button>
+                                        <div class="modal fade" id="delete{{ $item->id }}" data-backdrop="static"
+                                            data-keyboard="false" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title fs-5">Hapus <b>{{ $item->title }}</b>
+                                                        </h3>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah anda yakin ingin menghapus item tersebut?
+                                                    </div>
+                                                    <form class="modal-footer"
+                                                        action="{{ route('category.destroy', ['category' => $item->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-success">Hapus</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
             </div>
-          </div>
+            <!-- /.card -->
         </div>
-
-        <script>
-          const modalTambah = document.getElementById("tambah")
-          modalTambah.addEventListener("hidden.bs.modal", () => {
-            const input = modalTambah.querySelector("#title")
-            input.value = ""
-          })
-        </script>
-      </div>
-
-      <div class="container py-2 border rounded my-1 overflow-auto">
-        <table class="table table-striped">
-          <thead>
-            <th>#</th>
-            <th>Title</th>
-            <th>Slug</th>
-            <th>Action</th>
-          </thead>
-          <tbody>
-            @forelse ($data as $item)
-              <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->title }}</td>
-                <td>{{ $item->slug }}</td>
-                <td>
-                  <div class="d-inline-flex align-items-center gap-2">
-                    <button class="btn btn-primary" data-bs-toggle="modal"
-                      data-bs-target="#ubah-{{ $item->id }}">Edit</button>
-                    <div class="modal fade" id="ubah-{{ $item->id }}" data-bs-backdrop="static"
-                      data-bs-keyboard="false" tabindex="-1">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5">Edit Category
-                            </h1>
-                            <button type="button" class="btn btn-danger"
-                              data-bs-dismiss="modal">Cancel</button>
-                          </div>
-                          <div class="modal-body">
-                            @include('dashboard.category.edit')
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button class="btn btn-danger" data-bs-toggle="modal"
-                      data-bs-target="#delete{{ $loop->iteration }}">Delete</button>
-                    <div class="modal fade" id="delete{{ $loop->iteration }}" tabindex="-1">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h1 class="modal-title fs-5">Alert</h1>
-                            <button class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-                            are you sure you want to delete the item?
-                          </div>
-                          <form class="modal-footer"
-                            action="{{ route('category.destroy', ['category' => $item->id]) }}"
-                            method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-danger"
-                              data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Yes</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="5" class="text-center">
-                  Data tidak ada
-                </td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
     </div>
-  </x-dashboard-layout2>
+
+    <div class="modal fade" id="modal-default" data-backdrop="static" data-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Category</h4>
+                    <button type="button" class="close" id="modal1" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @include('dashboard.category.new')
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+@endsection
+
+@section('script')
+    <script>
+        let input = document.getElementById('modal1');
+        input.addEventListener('click', function() {
+            let title = document.getElementById('title');
+            title.value = '';
+        }, false);
+    </script>
 @endsection

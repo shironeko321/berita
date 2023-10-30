@@ -24,7 +24,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(ArticleRequest $request)
+    public function store(Request $request)
     {
         $user = Auth::user();
 

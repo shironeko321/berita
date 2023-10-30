@@ -10,26 +10,18 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Category $category)
+    public function index()
     {
-        return view("dashboard.category.index", ["data" => $category::all()]);
+        $category = Category::all();
+        return view("dashboard.category.index", compact("category"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view("dashboard.category.new");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CategoryRequest $request, Category $category)
     {
+        $user = auth()->user();
         $category->create([
             "title" => $request->input("title"),
+            "user_id" => $user->id,
         ]);
 
         return redirect()->route("category.index");
@@ -62,10 +54,11 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, string $id)
     {
-        $category = Category::find($id);
-        $category->title = $request->input("title");
-
-        $category->save();
+        $user = auth()->user();
+        Category::findOrFail($id)->update([
+            "title"=> $request->input("title"),
+            "user_id"=> $user->id,
+        ]);
 
         return redirect()->route("category.index");
     }

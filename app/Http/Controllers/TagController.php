@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -13,26 +14,16 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view("dashboard.tag.index", [
-            "data" => Tag::all()
-        ]);
+        $tag = Tag::all();
+        return view("dashboard.tag.index", compact("tag"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view("dashboard.tag.new");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(TagRequest $request)
     {
+        $user = Auth::user();
         Tag::create([
             "title" => $request->input("title"),
+            'user_id' => $user->id,
         ]);
 
         return redirect()->route("tags.index");
@@ -52,29 +43,13 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        return view("dashboard.tag.edit", [
-            "id" => $id,
-            "data" => Tag::find($id)
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $validation = $request->validate([
-            "title" => "required",
-            "slug" => "required"
+        $user = Auth::user();
+        Tag::findOrFail($id)->Update([
+            "title"=> $request->input("title"),
+            "user_id"=> $user->id,
         ]);
-
-        $tag = Tag::find($id);
-        $tag->title = $request->input("title");
-        $tag->slug = $request->input("slug");
-
-        $tag->save();
 
         return redirect()->route("tags.index");
     }
