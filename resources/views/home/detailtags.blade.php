@@ -6,19 +6,19 @@
     <x-slot name="header">
       {{ Breadcrumbs::render('tagsDetail', $article) }}
     </x-slot>
-    <div class="mt-8">
+    <div class="mt-8 text-lg px-5">
       <div class="flex justify-between items-end mb-8 px-5">
         <h4>Tags</h4>
-        <h4>{{ $article->title }}</h4>
+        <h4 class="font-bold">{{ $article->title }}</h4>
         <h4>Result: {{ count($article->posts) }}</h4>
       </div>
 
       <hr>
 
-      <div class="mt-4 grid gap-3 grid-cols-2 md:grid-cols-3">
+      <div class="mt-4 grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         @forelse ($article->posts as $item)
           <div
-            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-700">
+            class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-700 dark:border-gray-700">
             <a href="#">
               <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
             </a>
