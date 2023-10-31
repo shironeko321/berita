@@ -6,8 +6,11 @@ use App\Http\Requests\ArticleRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ArticleController extends Controller
 {
@@ -28,12 +31,20 @@ class ArticleController extends Controller
     {
         $user = Auth::user();
 
+        if ($request->hasFile('thumbnail')) {
+
+            $imageName = time() . '-' . $request->file('thumbnail')->getClientOriginalName();
+            $imagePath = 'thumbnail/' . $imageName;
+            $destinationPath = public_path($imagePath);
+            Image::make($request->file('thumbnail'))->resize(300, 200)->save($destinationPath);
+        }
+
         $article = Post::create([
             'title' => $request->title,
             'content' => $request->content,
             'content_meta' => $request->content_meta,
-            'status_published' => 1,
-            'thumbnail' => 'null',
+            'status_published' => $request->status_published,
+            'thumbnail' => $imageName,
             'user_id' => $user->id
         ]);
 
@@ -72,16 +83,32 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ArticleRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         $article = Post::find($id);
         $user = Auth::user();
+
+        $imagePath = 'thumbnail/' . $article->thumbnail;
+        
+        if ($request->hasFile('thumbnail')) {
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+
+            $imageName = time() . '-' . $request->file('thumbnail')->getClientOriginalName();
+            $imagePath = 'thumbnail/' . $imageName;
+            $destinationPath = public_path($imagePath);
+            Image::make($request->file('thumbnail'))->resize(300, 200)->save($destinationPath);
+        } else {
+            $imageName = $article->thumbnail;
+        }
 
         $article->update([
             'title' => $request->title,
             'content' => $request->content,
             'content_meta' => $request->content_meta,
-            'status_published' => 1,
+            'status_published' => $request->status_published,
+            'thumbnail' => $imageName,
             'user_id' => $user->id
         ]);
 
@@ -100,6 +127,11 @@ class ArticleController extends Controller
 
         Post::destroy($id);
 
+        $imagePath = 'thumbnail/' . $article->thumbnail;
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
         $article->tags()->detach();
         $article->categorys()->detach();
 
@@ -109,13 +141,13 @@ class ArticleController extends Controller
     public function updateView(string $id)
     {
         $article = Post::find($id);
-        
+
         if (is_null($article->view_content)) {
             $countView = 1;
         } else {
             $countView = $article->view_content + 1;
         }
-        
+
         $article->update([
             'view_content' => $countView
         ]);

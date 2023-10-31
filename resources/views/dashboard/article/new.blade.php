@@ -5,7 +5,8 @@
 @section('content')
     <section class="content">
         <div class="container-fluid">
-            <form class="row">
+            <form class="row" method="POST" action="{{ route('article.store') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="col-md-8">
                     <div class="card card-info">
                         <div class="card-header">
@@ -58,13 +59,13 @@
                                                     value="{{ old('title') }}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="radio" class="btn-check" name="options-outlined"
-                                                    id="success-outlined" autocomplete="off" checked>
+                                                <input type="radio" class="btn-check" name="status_published"
+                                                    id="success-outlined" autocomplete="off" checked value="1">
                                                 <label class="btn btn-outline-success btn-sm"
                                                     for="success-outlined">Published</label>
 
-                                                <input type="radio" class="btn-check" name="options-outlined"
-                                                    id="danger-outlined" autocomplete="off">
+                                                <input type="radio" class="btn-check" name="status_published"
+                                                    id="danger-outlined" autocomplete="off" value="2">
                                                 <label class="btn btn-outline-danger btn-sm" for="danger-outlined">Not
                                                     Published</label>
                                             </div>
@@ -73,7 +74,7 @@
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input"
-                                                            id="exampleInputFile">
+                                                            id="exampleInputFile" name="thumbnail">
                                                         <label class="custom-file-label" for="exampleInputFile">Pilih
                                                             file</label>
                                                     </div>
