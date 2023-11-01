@@ -4,6 +4,15 @@
 
 @section('content')
     <section class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container-fluid">
             <form class="row" method="POST" action="{{ route('article.store') }}" enctype="multipart/form-data">
                 @csrf
@@ -13,12 +22,12 @@
                             {{-- <h3 class="card-title">Quick Example</h3> --}}
                         </div>
                         {{-- <form> --}}
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <textarea id="mytextarea" name="content">{{ old('content') }}</textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success float-right">Submit</button>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <textarea id="mytextarea" name="content">{{ old('content') }}</textarea>
                             </div>
+                            <button type="submit" class="btn btn-success float-right">Submit</button>
+                        </div>
                         {{-- </form> --}}
                     </div>
                 </div>

@@ -27,7 +27,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
         $user = Auth::user();
 
@@ -83,10 +83,12 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ArticleRequest $request, string $id)
     {
         $article = Post::find($id);
         $user = Auth::user();
+
+        // dd($request->file('thumbnail'));
 
         $imagePath = 'thumbnail/' . $article->thumbnail;
         

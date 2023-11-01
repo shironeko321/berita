@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ArticleRequest extends FormRequest
 {
@@ -25,8 +27,16 @@ class ArticleRequest extends FormRequest
             'title' => 'required|min:1|max:100',
             'content' => 'required',
             'content_meta' => 'required|min:1|max:120',
-            // 'status_published' => 'required',
-            // 'user_id' => 'required',
+            'status_published' => 'required',
+            'thumbnail'=> [
+                Rule::requiredIf(function (){
+                    if ($this->thumbnail == null) {
+                        return false;
+                    } else {
+;                       'required|image|mimes:jpeg,jpg,png|max:2048';
+                    }
+                }),
+            ],
             'category' => 'required',
             'tags' => 'required'
         ];
@@ -38,6 +48,8 @@ class ArticleRequest extends FormRequest
             'title' => 'Content Title',
             'content' => 'Content',
             'content_meta' => 'Content Meta',
+            'status_published'=> 'Status Published',
+            'thumbnail'=> 'Thumbnail',
             'category' => 'Category',
             'tags' => 'Tag'
         ];
